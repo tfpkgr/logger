@@ -1,97 +1,90 @@
-# @tfpkgr/package-name
+# @tfpkgr/logger
 
-A standardized TypeScript-based npm package template with automatic bundling using **tsup**.
+## Overview
 
-## Features
+`@tfpkgr/logger` is a colorful, context-rich logger that includes file name, function name, and line number with each log. It is styled by log level for better readability and debugging.
 
--   **TypeScript support**: Ensures type safety and maintainability.
--   **Automatic bundling**: Uses `tsup` to bundle TypeScript into CommonJS (CJS) and ECMAScript Module (ESM) formats.
--   **Google TypeScript Style**: Enforces code consistency with `gts`.
--   **GitHub Packages Registry**: Pre-configured for publishing to GitHub Packages.
--   **Linting & Formatting**: Includes `gts` for linting and auto-fixing code style issues.
--   **GitHub Actions**: Automated publishing workflow on release.
+## Installation
 
-## Getting Started
-
-### 1. Clone the Repository
-
-```sh
-npx degit tfpkgr/template-npm my-new-package
-cd my-new-package
+```bash
+npm install @tfpkgr/logger
 ```
 
-### 2. Rename the Package
+## Usage
 
-Before installing dependencies, update the `name` field in `package.json` to your package name. This ensures `package-lock.json` is correctly updated when you install dependencies.
+### Basic Example
 
-### 3. Install Dependencies
+```typescript
+import Logger from '@tfpkgr/logger';
 
-```sh
-npm install
+const log = new Logger();
+
+log.info('This is an informational message');
+log.warn('This is a warning');
+log.error('This is an error');
+log.success('Operation successful!');
+log.debug('Debugging details');
 ```
 
-### 4. Customize Package
+### Advanced Features
 
--   Update `package.json` with the appropriate `description` and `author`.
--   Modify `src/index.ts` to implement your package functionality.
+#### Setting Global Log Level
 
-### 5. Build the Package
-
-```sh
-npm run build
+```typescript
+Logger.setLogLevel('DEBUG');
 ```
 
-This will generate the `dist/` directory containing the compiled files.
+#### File Logging
 
-### 6. Lint & Fix Code
+Enable or disable file logging and set the log directory:
 
-```sh
-npm run lint  # Check for issues
-npm run fix   # Auto-fix issues
+```typescript
+Logger.setFileLogging(true);
+Logger.setLogDirectory('./logs');
 ```
 
-### 7. Publish to GitHub Packages
+#### Child Loggers with Trace
 
-#### Automatic Publishing on Release
+Create child loggers with optional trace information:
 
-This repository includes a GitHub Actions workflow (`.github/workflows/publish.yaml`) that automatically publishes the package when a release is created.
+```typescript
+const parentLogger = new Logger('Parent');
+const childLogger = parentLogger.child('Child', true);
 
-#### Manual Publishing
-
-1. Authenticate with GitHub:
-    ```sh
-    npm login --registry=https://npm.pkg.github.com
-    ```
-2. Publish the package:
-    ```sh
-    npm publish
-    ```
-
-## File Structure
-
-```
-my-new-package/
-├── src/              # Source TypeScript files
-│   ├── index.ts      # Main entry point
-├── dist/             # Compiled output (ignored in Git)
-├── .github/workflows/ # GitHub Actions workflow for publishing
-│   ├── publish.yaml  # Publish package on release
-├── tsconfig.json     # TypeScript configuration
-├── tsconfig.build.json # Build-specific TypeScript config
-├── tsup.config.ts    # tsup bundler config
-├── package.json      # Project metadata & dependencies
-├── README.md         # Project documentation
-├── LICENSE           # License file
+childLogger.info('This is a child logger message');
 ```
 
-## [Multiple Exports](docs/multiple-exports.md)
+#### Timer Logging
 
-If your package has multiple exports, refer to [this guide](docs/multiple-exports.md) for configuration details.
+Measure execution time using timers:
 
-## License
+```typescript
+log.timeStart('process');
+// ... some operations ...
+log.timeEnd('process');
+```
 
-This project is licensed under the [MIT License](LICENSE).
+#### Custom Log Levels
 
----
+Log messages with custom levels:
 
-🚀 Built with ❤️ by MyDeck
+```typescript
+log.log('TRACE', 'This is a trace message');
+log.log('FATAL', 'This is a fatal error');
+```
+
+## API Reference
+
+### Logger Class
+
+-   **`info(...messages: unknown[])`**: Logs an informational message.
+-   **`warn(...messages: unknown[])`**: Logs a warning message.
+-   **`error(...messages: unknown[])`**: Logs an error message.
+-   **`success(...messages: unknown[])`**: Logs a success message.
+-   **`debug(...messages: unknown[])`**: Logs a debug message.
+-   **`verbose(...messages: unknown[])`**: Logs a verbose message.
+-   **`fatal(...messages: unknown[])`**: Logs a fatal error message.
+-   **`timeStart(label: string)`**: Starts a timer with a label.
+-   **`timeEnd(label: string)`**: Ends a timer and logs the duration.
+
+For more details, refer to the source code in `src/index.ts`.

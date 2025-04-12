@@ -1,7 +1,7 @@
 {
-	"name": "@tfpkgr/npm-template",
+	"name": "@tfpkgr/logger",
 	"version": "0.0.0",
-	"description": "Package description",
+	"description": "A colorful, context-rich logger that includes file name, function name, and line number with each log, styled by log level for better readability and debugging.",
 	"main": "dist/index.js",
 	"module": "dist/index.mjs",
 	"types": "dist/index.d.mts",
@@ -14,11 +14,11 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/tfpkgr/npm-template.git"
+		"url": "git+https://github.com/tfpkgr/logger.git"
 	},
 	"keywords": [
 		"tfpkgr",
-		"npm-template"
+		"logger"
 	],
 	"author": "tfpkgr",
 	"publishConfig": {
@@ -36,9 +36,9 @@
 	],
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/tfpkgr/npm-template/issues"
+		"url": "https://github.com/tfpkgr/logger/issues"
 	},
-	"homepage": "https://github.com/tfpkgr/npm-template#readme",
+	"homepage": "https://github.com/tfpkgr/logger#readme",
 	"devDependencies": {
 		"@types/node": "^22.14.1",
 		"gts": "^6.0.2",
